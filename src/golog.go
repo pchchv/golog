@@ -3,11 +3,12 @@ package golog
 import (
 	"errors"
 	"path/filepath"
+	"time"
 )
 
 // Golog is base struct
 type Golog struct {
-	l      logger
+	l      Logger
 	saving bool // If false doesn't write to the file
 	path   string
 }
@@ -35,4 +36,9 @@ func enablingFile(s bool, p string) (bool, string, error) {
 		}
 	}
 	return s, p, nil
+}
+
+func (g *Golog) Print(text string) {
+	g.l.time = time.Now()
+	g.l.text = text
 }
