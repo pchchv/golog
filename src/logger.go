@@ -7,3 +7,8 @@ type logger struct {
 	err  error
 	time time.Time
 }
+
+func NewLogger() *logger {
+	l := &logger{}
+	return l
+}

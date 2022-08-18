@@ -19,6 +19,7 @@ func New(saving bool, path string) (*Golog, error) {
 	if err != nil {
 		return g, err
 	}
+	g.l = *NewLogger()
 	return g, nil
 }
 
