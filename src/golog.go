@@ -41,4 +41,5 @@ func enablingFile(s bool, p string) (bool, string, error) {
 func (g *Golog) Print(text string) {
 	g.l.time = time.Now()
 	g.l.text = text
+	g.l.Print()
 }
