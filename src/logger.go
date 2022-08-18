@@ -1,14 +1,21 @@
 package golog
 
-import "time"
+import (
+	"fmt"
+	"time"
+)
 
-type logger struct {
+type Logger struct {
 	text string
 	err  error
 	time time.Time
 }
 
-func NewLogger() *logger {
-	l := &logger{}
+func NewLogger() *Logger {
+	l := &Logger{}
 	return l
+}
+
+func (l *Logger) Print() {
+	fmt.Printf("%v: %s", l.time, l.text)
 }
