@@ -8,21 +8,21 @@ import (
 
 // Golog is base struct
 type Golog struct {
-	l      Logger
-	saving bool // If false doesn't write to the file
-	print  bool // If false doesn't write to the console
-	path   string
+	L              Logger
+	PrintToFile    bool // If false doesn't write to the file
+	PrintToConsole bool // If false doesn't write to the console
+	FilePath       string
 }
 
 func New(print bool, saving bool, path string) (*Golog, error) {
 	var err error
 	g := &Golog{}
-	g.print = print
-	g.saving, g.path, err = enablingFile(saving, path)
+	g.PrintToConsole = print
+	g.PrintToFile, g.FilePath, err = enablingFile(saving, path)
 	if err != nil {
 		return g, err
 	}
-	g.l = *NewLogger()
+	g.L = *NewLogger()
 	return g, nil
 }
 
@@ -42,16 +42,16 @@ func enablingFile(s bool, p string) (bool, string, error) {
 }
 
 func (g *Golog) Print(text string) {
-	g.l.time = time.Now()
-	g.l.text = text
-	g.l.Print()
+	g.L.Time = time.Now()
+	g.L.Text = text
+	g.L.Print()
 }
 
 func (g *Golog) Log(text string) {
-	g.l.text = text
-	if g.print {
-		g.l.Print()
+	g.L.Text = text
+	if g.PrintToConsole {
+		g.L.Print()
 	}
-	if g.saving {
+	if g.PrintToFile {
 	}
 }

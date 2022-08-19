@@ -6,9 +6,9 @@ import (
 )
 
 type Logger struct {
-	text string
-	err  error
-	time time.Time
+	Text  string
+	Error error
+	Time  time.Time
 }
 
 func NewLogger() *Logger {
@@ -17,7 +17,7 @@ func NewLogger() *Logger {
 }
 
 func (l *Logger) Print() {
-	fmt.Printf("%v: %s", l.time, l.text)
+	fmt.Printf("%v: %s", l.Time, l.Text)
 }
 
 func (l *Logger) Log(g *Golog) {
