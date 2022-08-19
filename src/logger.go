@@ -23,3 +23,7 @@ func (l *Logger) Print() {
 func (l *Logger) Log(g *Golog) {
 	g.File.WriteString(fmt.Sprintf("%v: %s", l.Time, l.Text))
 }
+
+func (l *Logger) Panic() {
+	panic(l.Error)
+}
