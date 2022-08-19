@@ -11,8 +11,8 @@ import (
 // Golog is base struct
 type Golog struct {
 	L              Logger
-	PrintToFile    bool // If false doesn't write to the file
-	PrintToConsole bool // If false doesn't write to the console
+	PrintToFile    bool // If true write to the file
+	PrintToConsole bool // If true write to the console
 	File           *os.File
 }
 
@@ -70,6 +70,7 @@ func (g *Golog) Panic(err error) {
 	g.L.Error = err
 	if g.PrintToFile {
 		g.L.Text = fmt.Sprintf("Panic: %v", err)
+		g.L.Print()
 		g.L.Log()
 	}
 	g.L.Panic()
