@@ -10,12 +10,14 @@ import (
 type Golog struct {
 	l      Logger
 	saving bool // If false doesn't write to the file
+	print  bool // If false doesn't write to the console
 	path   string
 }
 
-func New(saving bool, path string) (*Golog, error) {
+func New(print bool, saving bool, path string) (*Golog, error) {
 	var err error
 	g := &Golog{}
+	g.print = print
 	g.saving, g.path, err = enablingFile(saving, path)
 	if err != nil {
 		return g, err
