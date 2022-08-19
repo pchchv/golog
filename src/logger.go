@@ -21,5 +21,5 @@ func (l *Logger) Print() {
 }
 
 func (l *Logger) Log(g *Golog) {
-	// need implement a print to file
+	g.File.WriteString(fmt.Sprintf("%v: %s", l.Time, l.Text))
 }

@@ -55,6 +55,7 @@ func (g *Golog) Print(text string) {
 }
 
 func (g *Golog) Log(text string) {
+	g.L.Time = time.Now()
 	g.L.Text = text
 	if g.PrintToConsole {
 		g.L.Print()
