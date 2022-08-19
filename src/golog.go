@@ -61,5 +61,6 @@ func (g *Golog) Log(text string) {
 		g.L.Print()
 	}
 	if g.PrintToFile {
+		g.L.Log(g)
 	}
 }
