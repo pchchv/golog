@@ -68,8 +68,8 @@ func (g *Golog) Log(text string) {
 func (g *Golog) Panic(err error) {
 	g.L.Time = time.Now()
 	g.L.Error = err
-	g.L.Text = fmt.Sprintf("Panic: %v", err)
 	if g.PrintToFile {
+		g.L.Text = fmt.Sprintf("Panic: %v", err)
 		g.L.Log()
 	}
 	g.L.Panic()
