@@ -45,3 +45,12 @@ func (g *Golog) Print(text string) {
 	g.l.text = text
 	g.l.Print()
 }
+
+func (g *Golog) Log(text string) {
+	g.l.text = text
+	if g.print {
+		g.l.Print()
+	}
+	if g.saving {
+	}
+}
