@@ -25,7 +25,7 @@ func New(print bool, saving bool, path string) (*Golog, error) {
 		return g, err
 	}
 	defer g.File.Close()
-	g.L = *NewLogger()
+	g.L = *NewLogger(g.File)
 	return g, nil
 }
 
@@ -61,7 +61,7 @@ func (g *Golog) Log(text string) {
 		g.L.Print()
 	}
 	if g.PrintToFile {
-		g.L.Log(g.File)
+		g.L.Log()
 	}
 }
 
@@ -70,7 +70,7 @@ func (g *Golog) Panic(err error) {
 	g.L.Error = err
 	g.L.Text = fmt.Sprintf("Panic: %v", err)
 	if g.PrintToFile {
-		g.L.Log(g.File)
+		g.L.Log()
 	}
 	g.L.Panic()
 }
