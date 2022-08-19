@@ -19,3 +19,7 @@ func NewLogger() *Logger {
 func (l *Logger) Print() {
 	fmt.Printf("%v: %s", l.time, l.text)
 }
+
+func (l *Logger) Log(g *Golog) {
+	// need implement a print to file
+}
