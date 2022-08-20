@@ -75,3 +75,9 @@ func (g *Golog) Panic(err error) {
 	}
 	g.L.Panic()
 }
+
+func (g *Golog) Error(text string) {
+	g.L.Time = time.Now()
+	g.L.Text = text
+	g.L.Error()
+}
