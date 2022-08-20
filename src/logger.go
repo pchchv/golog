@@ -7,10 +7,10 @@ import (
 )
 
 type Logger struct {
-	Text  string
-	Error error
-	Time  time.Time
-	File  *os.File
+	Text string
+	Err  error
+	Time time.Time
+	File *os.File
 }
 
 func NewLogger(f *os.File) *Logger {
@@ -28,5 +28,5 @@ func (l *Logger) Log() {
 }
 
 func (l *Logger) Panic() {
-	panic(l.Error)
+	panic(l.Err)
 }
