@@ -32,5 +32,6 @@ func (l *Logger) Panic() {
 }
 
 func (l *Logger) Error() {
+	l.File.WriteString(fmt.Sprintf("%v: ERROR: %v", l.Time, l.Err))
 	fmt.Println(l.Err.Error())
 }
