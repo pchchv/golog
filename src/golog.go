@@ -79,5 +79,6 @@ func (g *Golog) Panic(err error) {
 func (g *Golog) Error(text string) {
 	g.L.Time = time.Now()
 	g.L.Text = text
+	g.L.Err = errors.New(g.L.Text)
 	g.L.Error()
 }
