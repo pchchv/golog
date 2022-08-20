@@ -30,3 +30,7 @@ func (l *Logger) Log() {
 func (l *Logger) Panic() {
 	panic(l.Err)
 }
+
+func (l *Logger) Error() {
+	fmt.Println(l.Err.Error())
+}
