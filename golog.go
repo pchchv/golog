@@ -5,6 +5,7 @@ import (
 	"os"
 	"path"
 	"runtime"
+	"time"
 )
 
 type Level int
@@ -49,6 +50,17 @@ var (
 	}
 )
 
+func log(level Level, framesBackward int, message string) {
+	// We know here that the stack contains two calls from inside this file.
+	// The third frame comes from the file that initially called a function
+	// in this file e.g. Info()
+	caller := getCallerDetails(framesBackward)
+
+	updateCallerColumnWidth(caller)
+
+	FormatFunctions[level](LevelOutputs[level], time.Now().Format(DateFormat), LevelStrings[level], CallerColumnWidth, caller, message)
+}
+
 func getCallerDetails(framesBackwards int) string {
 	name := ""
 	line := -1
@@ -61,6 +73,12 @@ func getCallerDetails(framesBackwards int) string {
 	caller := fmt.Sprintf("%s:%d", name, line)
 
 	return caller
+}
+
+func updateCallerColumnWidth(caller string) {
+	if len(caller) > CallerColumnWidth {
+		CallerColumnWidth = len(caller)
+	}
 }
 
 func LogPlain(writer *os.File, time, level string, maxLength int, caller, message string) {
