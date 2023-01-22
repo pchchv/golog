@@ -79,6 +79,16 @@ func TestPlain(t *testing.T) {
 	}
 }
 
+func TestInfo(t *testing.T) {
+	pipe := prepare(LOG_INFO)
+
+	originalData := "aAzZ1!?_´→"
+
+	Info(originalData)
+
+	checkSimpleWrite(t, pipe, originalData, LOG_INFO)
+}
+
 func TestPlainFormat(t *testing.T) {
 	pipe := prepare(LOG_PLAIN)
 
@@ -100,4 +110,15 @@ func TestPlainFormat(t *testing.T) {
 		t.Errorf("written  : %x\n", writtenOutput)
 		t.Fail()
 	}
+}
+
+func TestInfoFormat(t *testing.T) {
+	pipe := prepare(LOG_INFO)
+
+	originalData := "foo_123_bla_70"
+	originalFormat := "foo_%d_%s_%x"
+
+	Info(originalFormat, 123, "bla", "p")
+
+	checkSimpleWrite(t, pipe, originalData, LOG_INFO)
 }
