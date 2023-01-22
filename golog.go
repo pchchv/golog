@@ -131,6 +131,17 @@ func log(level Level, framesBackward int, message string) {
 	FormatFunctions[level](LevelOutputs[level], time.Now().Format(DateFormat), LevelStrings[level], CallerColumnWidth, caller, message)
 }
 
+func internalLog(level Level, message string) {
+	// We know here that the stack contains three calls from inside this file.
+	// The third frame comes from the file that initially called a function
+	// in this file e.g. Info()
+	caller := getCallerDetails(4)
+
+	updateCallerColumnWidth(caller)
+
+	FormatFunctions[level](LevelOutputs[level], time.Now().Format(DateFormat), LevelStrings[level], CallerColumnWidth, caller, message)
+}
+
 func getCallerDetails(framesBackwards int) string {
 	name := ""
 	line := -1
