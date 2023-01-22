@@ -120,6 +120,38 @@ func Stackb(framesBackward int, err error) {
 	}
 }
 
+func Fatal(format string, a ...interface{}) {
+	log(LOG_FATAL, 3, fmt.Sprintf(format, a...))
+	os.Exit(1)
+}
+
+// FatalCheckf checks if the error exists.
+// If so, it'll print the error message and fatals with the given format message.
+func FatalCheckf(err error, format string, a ...interface{}) {
+	if err != nil {
+		Stackb(1, err)
+		if a != nil {
+			internalFatal(format, a...)
+		} else {
+			internalFatal(format)
+		}
+	}
+}
+
+// FatalCheck checks if the error exists (!= nil).
+// If so, it'll fatal with the error message.
+func FatalCheck(err error) {
+	if err != nil {
+		Stackb(1, err)
+		os.Exit(1)
+	}
+}
+
+func internalFatal(format string, a ...interface{}) {
+	internalLog(LOG_FATAL, fmt.Sprintf(format, a...))
+	os.Exit(1)
+}
+
 func log(level Level, framesBackward int, message string) {
 	// We know here that the stack contains two calls from inside this file.
 	// The third frame comes from the file that initially called a function
