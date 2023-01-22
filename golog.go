@@ -3,6 +3,8 @@ package golog
 import (
 	"fmt"
 	"os"
+	"path"
+	"runtime"
 )
 
 type Level int
@@ -46,6 +48,20 @@ var (
 		LOG_FATAL: os.Stderr,
 	}
 )
+
+func getCallerDetails(framesBackwards int) string {
+	name := ""
+	line := -1
+	ok := false
+
+	if _, name, line, ok = runtime.Caller(framesBackwards); ok {
+		name = path.Base(name)
+	}
+
+	caller := fmt.Sprintf("%s:%d", name, line)
+
+	return caller
+}
 
 func LogPlain(writer *os.File, time, level string, maxLength int, caller, message string) {
 	fmt.Fprintf(writer, "%s\n", message)
