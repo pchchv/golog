@@ -102,6 +102,24 @@ func Errorb(framesBackward int, format string, a ...interface{}) {
 	}
 }
 
+// Stack tries to print the stack trace of the given error using the  %+v  format string.
+// When using the https://github.com/pkg/errors package, a full error stack trace will be output.
+// If normal errors are used, just print the error.
+func Stack(err error) {
+	if LogLevel <= LOG_ERROR {
+		// Directly call "log" to avoid extra function call
+		log(LOG_ERROR, 3, fmt.Sprintf("%+v", err))
+	}
+}
+
+// Stackb is equal to Stack(...) but can go back in the stack and can therefore show function positions from previous functions.
+func Stackb(framesBackward int, err error) {
+	if LogLevel <= LOG_ERROR {
+		// Directly call "log" to avoid extra function call
+		log(LOG_ERROR, 3+framesBackward, fmt.Sprintf("%+v", err))
+	}
+}
+
 func log(level Level, framesBackward int, message string) {
 	// We know here that the stack contains two calls from inside this file.
 	// The third frame comes from the file that initially called a function
