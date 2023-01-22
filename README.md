@@ -117,3 +117,8 @@ This will produce:
 ```bash
 21.07.2018 at 02:16:41 [DEBUG] main.go:37 | Hello world!
 ```
+
+# TODO
+
+* ##  Panic
+* ##  Logging to file
