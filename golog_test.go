@@ -99,6 +99,16 @@ func TestDebug(t *testing.T) {
 	checkSimpleWrite(t, pipe, originalData, LOG_DEBUG)
 }
 
+func TestError(t *testing.T) {
+	pipe := prepare(LOG_ERROR)
+
+	originalData := "aAzZ1!?_´→"
+
+	Error(originalData)
+
+	checkSimpleWrite(t, pipe, originalData, LOG_ERROR)
+}
+
 func TestPlainFormat(t *testing.T) {
 	pipe := prepare(LOG_PLAIN)
 
@@ -142,4 +152,15 @@ func TestDebugFormat(t *testing.T) {
 	Debug(originalFormat, 123, "bla", "p")
 
 	checkSimpleWrite(t, pipe, originalData, LOG_DEBUG)
+}
+
+func TestErrorFormat(t *testing.T) {
+	pipe := prepare(LOG_ERROR)
+
+	originalData := "foo_123_bla_70"
+	originalFormat := "foo_%d_%s_%x"
+
+	Error(originalFormat, 123, "bla", "p")
+
+	checkSimpleWrite(t, pipe, originalData, LOG_ERROR)
 }
