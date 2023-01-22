@@ -20,7 +20,7 @@ func prepare(logLevel Level) *os.File {
 
 func cutOutput(f *os.File) (string, string) {
 	data := make([]byte, 2<<10)
-	f.Read(data)
+	_, _ = f.Read(data)
 
 	writtenOutput := string(data)
 	writtenParts := strings.Split(writtenOutput, " ")
@@ -67,7 +67,7 @@ func TestPlain(t *testing.T) {
 	Plain(originalData)
 
 	data := make([]byte, 2<<10)
-	pipe.Read(data)
+	_, _ = pipe.Read(data)
 
 	writtenOutput := string(data)
 	writtenOutput = strings.Trim(writtenOutput, "\000")
@@ -135,7 +135,7 @@ func TestFatal(t *testing.T) {
 	cmd.Env = append(os.Environ(), "LOG_FATAL=1")
 	cmd.Stderr = writePipe
 	cmd.Stdout = writePipe
-	cmd.Run()
+	_ = cmd.Run()
 
 	checkSimpleWrite(t, readPipe, originalData, LOG_FATAL)
 }
@@ -149,7 +149,7 @@ func TestPlainFormat(t *testing.T) {
 	Plain(originalFormat, 123, "bla", "p")
 
 	data := make([]byte, 2<<10)
-	pipe.Read(data)
+	_, _ = pipe.Read(data)
 
 	writtenOutput := string(data)
 	writtenOutput = strings.Trim(writtenOutput, "\000")
@@ -222,7 +222,7 @@ func TestFatalFormat(t *testing.T) {
 	cmd.Env = append(os.Environ(), "LOG_FATAL=1")
 	cmd.Stderr = writePipe
 	cmd.Stdout = writePipe
-	cmd.Run()
+	_ = cmd.Run()
 
 	checkSimpleWrite(t, readPipe, originalData, LOG_FATAL)
 }
