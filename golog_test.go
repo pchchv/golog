@@ -3,6 +3,7 @@ package golog
 import (
 	"errors"
 	"os"
+	"os/exec"
 	"strings"
 	"testing"
 )
@@ -120,6 +121,25 @@ func TestStack(t *testing.T) {
 	checkSimpleWrite(t, pipe, originalData.Error(), LOG_ERROR)
 }
 
+func TestFatal(t *testing.T) {
+	originalData := "aAzZ1!?_´→"
+
+	if os.Getenv("LOG_FATAL") == "1" {
+		Fatal(originalData)
+		return
+	}
+	readPipe, writePipe, _ := os.Pipe()
+
+	// Starts this test function as separate process to test the "os.Exit(1)" of Fatal
+	cmd := exec.Command(os.Args[0], "-test.run=TestFatal")
+	cmd.Env = append(os.Environ(), "LOG_FATAL=1")
+	cmd.Stderr = writePipe
+	cmd.Stdout = writePipe
+	cmd.Run()
+
+	checkSimpleWrite(t, readPipe, originalData, LOG_FATAL)
+}
+
 func TestPlainFormat(t *testing.T) {
 	pipe := prepare(LOG_PLAIN)
 
@@ -185,4 +205,24 @@ func TestStackFormat(t *testing.T) {
 	Error(originalFormat, 123, "bla", "p")
 
 	checkSimpleWrite(t, pipe, originalData.Error(), LOG_ERROR)
+}
+
+func TestFatalFormat(t *testing.T) {
+	originalData := "foo_123_bla_70"
+	originalFormat := "foo_%d_%s_%x"
+
+	if os.Getenv("LOG_FATAL") == "1" {
+		Fatal(originalFormat, 123, "bla", "p")
+		return
+	}
+	readPipe, writePipe, _ := os.Pipe()
+
+	// Starts this test function as separate process to test the "os.Exit(1)" of Fatal
+	cmd := exec.Command(os.Args[0], "-test.run=TestFatalFormat")
+	cmd.Env = append(os.Environ(), "LOG_FATAL=1")
+	cmd.Stderr = writePipe
+	cmd.Stdout = writePipe
+	cmd.Run()
+
+	checkSimpleWrite(t, readPipe, originalData, LOG_FATAL)
 }
