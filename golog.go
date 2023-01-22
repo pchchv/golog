@@ -76,6 +76,19 @@ func Infob(framesBackward int, format string, a ...interface{}) {
 	}
 }
 
+func Debug(format string, a ...interface{}) {
+	if LogLevel <= LOG_DEBUG {
+		log(LOG_DEBUG, 3, fmt.Sprintf(format, a...))
+	}
+}
+
+// Debugb is equal to Debug(...) but can go back in the stack and can therefore show function positions from previous functions.
+func Debugb(framesBackward int, format string, a ...interface{}) {
+	if LogLevel <= LOG_DEBUG {
+		log(LOG_DEBUG, 3+framesBackward, fmt.Sprintf(format, a...))
+	}
+}
+
 func log(level Level, framesBackward int, message string) {
 	// We know here that the stack contains two calls from inside this file.
 	// The third frame comes from the file that initially called a function
