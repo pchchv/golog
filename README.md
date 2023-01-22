@@ -6,7 +6,13 @@
 
 </div>
 
+
 # Using
+
+## Import
+```go
+import "github.com/pchchv/golog"
+```
 
 ### Call `golog.{Plain|Info|Debug|Error|Fatal}` with a message.
 
