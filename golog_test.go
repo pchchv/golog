@@ -1,6 +1,7 @@
 package golog
 
 import (
+	"errors"
 	"os"
 	"strings"
 	"testing"
@@ -109,6 +110,16 @@ func TestError(t *testing.T) {
 	checkSimpleWrite(t, pipe, originalData, LOG_ERROR)
 }
 
+func TestStack(t *testing.T) {
+	pipe := prepare(LOG_ERROR)
+
+	originalData := errors.New("aAzZ1!?_´→")
+
+	Stack(originalData)
+
+	checkSimpleWrite(t, pipe, originalData.Error(), LOG_ERROR)
+}
+
 func TestPlainFormat(t *testing.T) {
 	pipe := prepare(LOG_PLAIN)
 
@@ -163,4 +174,15 @@ func TestErrorFormat(t *testing.T) {
 	Error(originalFormat, 123, "bla", "p")
 
 	checkSimpleWrite(t, pipe, originalData, LOG_ERROR)
+}
+
+func TestStackFormat(t *testing.T) {
+	pipe := prepare(LOG_ERROR)
+
+	originalData := errors.New("foo_123_bla_70")
+	originalFormat := "foo_%d_%s_%x"
+
+	Error(originalFormat, 123, "bla", "p")
+
+	checkSimpleWrite(t, pipe, originalData.Error(), LOG_ERROR)
 }
