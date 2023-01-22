@@ -56,3 +56,48 @@ func checkSimpleWrite(t *testing.T, pipe *os.File, originalData string, logLevel
 		t.Fail()
 	}
 }
+
+func TestPlain(t *testing.T) {
+	pipe := prepare(LOG_PLAIN)
+
+	originalData := "aAzZ1!?_´→"
+
+	Plain(originalData)
+
+	data := make([]byte, 2<<10)
+	pipe.Read(data)
+
+	writtenOutput := string(data)
+	writtenOutput = strings.Trim(writtenOutput, "\000")
+	writtenOutput = strings.Trim(writtenOutput, "\n")
+
+	if originalData != writtenOutput {
+		t.Errorf("Payload does not match")
+		t.Errorf("original : %x\n", originalData)
+		t.Errorf("written  : %x\n", writtenOutput)
+		t.Fail()
+	}
+}
+
+func TestPlainFormat(t *testing.T) {
+	pipe := prepare(LOG_PLAIN)
+
+	originalData := "foo_123_bla_70"
+	originalFormat := "foo_%d_%s_%x"
+
+	Plain(originalFormat, 123, "bla", "p")
+
+	data := make([]byte, 2<<10)
+	pipe.Read(data)
+
+	writtenOutput := string(data)
+	writtenOutput = strings.Trim(writtenOutput, "\000")
+	writtenOutput = strings.Trim(writtenOutput, "\n")
+
+	if originalData != writtenOutput {
+		t.Errorf("Payload does not match")
+		t.Errorf("original : %x\n", originalData)
+		t.Errorf("written  : %x\n", writtenOutput)
+		t.Fail()
+	}
+}
