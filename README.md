@@ -116,5 +116,4 @@ This will produce:
 
 # **TODO**
 
-* **Panic**
 * **Logging to file**

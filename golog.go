@@ -16,6 +16,7 @@ const (
 	LOG_INFO
 	LOG_ERROR
 	LOG_FATAL
+	LOG_PANIC
 )
 
 var (
@@ -28,6 +29,7 @@ var (
 		LOG_INFO:  LogDefault,
 		LOG_ERROR: LogDefault,
 		LOG_FATAL: LogDefault,
+		LOG_PANIC: LogDefault,
 	}
 
 	// The current maximum length printed for caller information. This is updated each time something gets printed
@@ -39,6 +41,7 @@ var (
 		LOG_INFO:  "[INFO] ",
 		LOG_ERROR: "[ERROR]",
 		LOG_FATAL: "[FATAL]",
+		LOG_PANIC: "[PANIC]",
 	}
 
 	LevelOutputs = map[Level]*os.File{
@@ -47,6 +50,7 @@ var (
 		LOG_INFO:  os.Stdout,
 		LOG_ERROR: os.Stderr,
 		LOG_FATAL: os.Stderr,
+		LOG_PANIC: os.Stderr,
 	}
 )
 
@@ -100,6 +104,12 @@ func Errorb(framesBackward int, format string, a ...interface{}) {
 	if LogLevel <= LOG_ERROR {
 		log(LOG_ERROR, 3+framesBackward, fmt.Sprintf(format, a...))
 	}
+}
+
+func Panic(format string, a ...interface{}) {
+	s := fmt.Sprintf(format, a...)
+	log(LOG_PANIC, 3, s)
+	panic(s)
 }
 
 // Stack tries to print the stack trace of the given error using the  %+v  format string.
