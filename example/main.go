@@ -68,6 +68,7 @@ func main() {
 	golog.Error("Hello world!")
 
 	golog.FatalCheck(thisFunc())
+	golog.Panic("Hello world!")
 }
 
 func simpleInfo(writer *os.File, time, level string, maxLength int, caller, message string) {
