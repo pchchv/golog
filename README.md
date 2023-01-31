@@ -1,20 +1,16 @@
 # **golog** [![Go Reference](https://pkg.go.dev/badge/github.com/pchchv/golog.svg)](https://pkg.go.dev/github.com/pchchv/golog)
 
-<div align="center">
 
 ## *Simple logging library for golang*
 
-</div>
+# **Using**
 
-
-# Using
-
-## Import
+## *Import*
 ```go
 import "github.com/pchchv/golog"
 ```
 
-### Call `golog.{Plain|Info|Debug|Error|Fatal}` with a message.
+Call `golog.{Plain|Info|Debug|Error|Fatal}` with a message.
 
 ```go
 golog.Info("Hello world!")
@@ -28,26 +24,26 @@ The default printing format is something like this:
 2018-07-21 01:59:05.432 [DEBUG] main.go:22 | Coordinate: 42, 13
 ```
 
-### Only the `golog.Plain` function does not produce leading information (date, log-level, etc.) and just acts like `fmt.Printf` does.
+Only the `golog.Plain` function does not produce leading information (date, log-level, etc.) and just acts like `fmt.Printf` does.
 
-## Error handling
+## *Error handling*
 
-### Recommended to use [pkg/errors](https://github.com/pkg/errors) package to create and wrap your errors. It enables you to see stack traces.
+Recommended to use [pkg/errors](https://github.com/pkg/errors) package to create and wrap your errors. It enables you to see stack traces.
 
-### To exit on an error, there's the `golog.FatalCheck` function:
+To exit on an error, there's the `golog.FatalCheck` function:
 
 ```go
 err := someFunctionCall()
 golog.FatalCheck(err)
 ```
 
-### When `err` is *not* `nil`, then the error including stack trace will be printed and your application exists with exit code 1.
+When `err` is *not* `nil`, then the error including stack trace will be printed and your application exists with exit code 1.
 
-## Log level
+## *Log level*
 
-### Specify the log level by changing `golog.LogLevel`. Possible value are `golog.LOG_PLAIN`, `golog.LOG_DEBUG`, `golog.LOG_INFO`, `golog.LOG_ERROR` and `golog.LOG_FATAL`.
+Specify the log level by changing `golog.LogLevel`. Possible value are `golog.LOG_PLAIN`, `golog.LOG_DEBUG`, `golog.LOG_INFO`, `golog.LOG_ERROR` and `golog.LOG_FATAL`.
 
-### Depending on the log level, some functions will be quite and do not produce outputs anymore:
+Depending on the log level, some functions will be quite and do not produce outputs anymore:
 
 | log level | Methods which will produce an output |
 |:--:|:--|
@@ -59,9 +55,9 @@ golog.FatalCheck(err)
 \* Prints to stdout but without any tags in front
 \*\* This will print the error and call `os.Exit(1)`
 
-## Function suffixes / Variants
+## *Function suffixes / Variants*
 
-### Some functions have a suffix with slightly different behavior.
+Some functions have a suffix with slightly different behavior.
 
 #### For non-fatal functions:
 
@@ -71,9 +67,9 @@ golog.FatalCheck(err)
 
 * Suffix `f`: Acts like the normal function, but after printing the stack, the given format string will be evaluated and printed as well.
 
-## Change general output format
+## *Change general output format*
 
-### The format can be changed by implementing the printing function specified in the `golog.FormatFunctions` array.
+The format can be changed by implementing the printing function specified in the `golog.FormatFunctions` array.
 
 Exmaple: To specify your own debug-format:
 
@@ -91,13 +87,13 @@ func main() {
 }
 ```
 
-#### This example will print:
+This example will print:
 
 ```bash
 Debug: Hello world!
 ```
 
-## Change time format
+## *Change time format*
 
 To change only the time format, change the value of the `golog.DateFormat` variable. The format of this variable if the
 format described in the [time package](https://golang.org/pkg/time/).
@@ -118,7 +114,7 @@ This will produce:
 21.07.2018 at 02:16:41 [DEBUG] main.go:37 | Hello world!
 ```
 
-# TODO
+# **TODO**
 
-* ##  Panic
-* ##  Logging to file
+* **Panic**
+* **Logging to file**
