@@ -140,6 +140,28 @@ func TestFatal(t *testing.T) {
 	checkSimpleWrite(t, readPipe, originalData, LOG_FATAL)
 }
 
+func TestPanic(t *testing.T) {
+	originalData := "aAzZ1!?_´→"
+
+	if os.Getenv("LOG_PANIC") == "1" {
+		Panic(originalData)
+		return
+	}
+	readPipe, writePipe, _ := os.Pipe()
+
+	// Starts this test function as separate process to test the "os.Exit(1)" of Panic
+	cmd := exec.Command(os.Args[0], "-test.run=TestPanic")
+	cmd.Env = append(os.Environ(), "LOG_PANIC=1")
+	cmd.Stderr = writePipe
+	cmd.Stdout = writePipe
+	_ = cmd.Run()
+
+	level, _ := cutOutput(readPipe)
+	if level != "[PANIC]" {
+		checkSimpleWrite(t, readPipe, originalData, LOG_PANIC)
+	}
+}
+
 func TestPlainFormat(t *testing.T) {
 	pipe := prepare(LOG_PLAIN)
 
@@ -225,4 +247,27 @@ func TestFatalFormat(t *testing.T) {
 	_ = cmd.Run()
 
 	checkSimpleWrite(t, readPipe, originalData, LOG_FATAL)
+}
+
+func TestPanicFormat(t *testing.T) {
+	originalData := "foo_123_bla_70"
+	originalFormat := "foo_%d_%s_%x"
+
+	if os.Getenv("LOG_PANIC") == "1" {
+		Panic(originalFormat, 123, "bla", "p")
+		return
+	}
+	readPipe, writePipe, _ := os.Pipe()
+
+	// Starts this test function as separate process to test the "os.Exit(1)" of Panic
+	cmd := exec.Command(os.Args[0], "-test.run=TestPanicFormat")
+	cmd.Env = append(os.Environ(), "LOG_PANIC=1")
+	cmd.Stderr = writePipe
+	cmd.Stdout = writePipe
+	_ = cmd.Run()
+
+	level, _ := cutOutput(readPipe)
+	if level != "[PANIC]" {
+		checkSimpleWrite(t, readPipe, originalData, LOG_PANIC)
+	}
 }
