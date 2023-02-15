@@ -1,7 +1,8 @@
-# **golog** [![Go Reference](https://pkg.go.dev/badge/github.com/pchchv/golog.svg)](https://pkg.go.dev/github.com/pchchv/golog)
+[![Go Reference](https://pkg.go.dev/badge/github.com/pchchv/golog.svg)](https://pkg.go.dev/github.com/pchchv/golog)
 
+# **golog**
 
-## *Simple logging library for golang*
+### *Simple logging library for golang*
 
 # **Using**
 
