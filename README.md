@@ -48,7 +48,7 @@ Depending on the log level, some functions will be quite and do not produce outp
 
 | log level | Methods which will produce an output |
 |:--:|:--|
-| `LOG_PLAIN` | `golog.Plain()`<sup>*</sup><br>`golog.Debug()`<br>`golog.Info()`<br>`golog.Error()`<br>`golog.Fatal()`<br>`golog.CheckFatal()`<br>`golog.Stack()` |
+| `LOG_PLAIN` | `golog.Plain()`<sup></sup><br>`golog.Debug()`<br>`golog.Info()`<br>`golog.Error()`<br>`golog.Fatal()`<br>`golog.CheckFatal()`<br>`golog.Stack()` |
 | `LOG_DEBUG` | `golog.Debug()`<br>`golog.Info()`<br>`golog.Error()`<br>`golog.Fatal()`<br>`golog.CheckFatal()`<br>`golog.Stack()` |
 | `LOG_INFO` | `golog.Info()`<br>`golog.Error()`<br>`golog.Fatal()`<br>`golog.CheckFatal()`<br>`golog.Stack()` |
 | `LOG_ERROR` | `golog.Error()`<br>`golog.Fatal()`<br>`golog.CheckFatal()`<br>`golog.Stack()` |
