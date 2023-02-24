@@ -21,8 +21,8 @@ golog.Debug("Coordinate: %d, %d", x, y)
 The default printing format is something like this:
 
 ```bash
-2018-07-21 01:59:05.431 [INFO]  main.go:21 | Hello world!
-2018-07-21 01:59:05.432 [DEBUG] main.go:22 | Coordinate: 42, 13
+2023-01-11 11:59:23.411 [INFO]  main.go:21 | Hello world!
+2023-01-11 11:59:23.412 [DEBUG] main.go:22 | Coordinate: 42, 13
 ```
 
 Only the `golog.Plain` function does not produce leading information (date, log-level, etc.) and just acts like `fmt.Printf` does.
@@ -48,11 +48,11 @@ Depending on the log level, some functions will be quite and do not produce outp
 
 | log level | Methods which will produce an output |
 |:--:|:--|
-| `LOG_PLAIN` | `golog.Plain()`<sup></sup><br>`golog.Debug()`<br>`golog.Info()`<br>`golog.Error()`<br>`golog.Fatal()`<br>`golog.CheckFatal()`<br>`golog.Stack()` |
+| `LOG_PLAIN` | `golog.Plain()`<sup>\*</sup><br>`golog.Debug()`<br>`golog.Info()`<br>`golog.Error()`<br>`golog.Fatal()`<br>`golog.CheckFatal()`<br>`golog.Stack()` |
 | `LOG_DEBUG` | `golog.Debug()`<br>`golog.Info()`<br>`golog.Error()`<br>`golog.Fatal()`<br>`golog.CheckFatal()`<br>`golog.Stack()` |
 | `LOG_INFO` | `golog.Info()`<br>`golog.Error()`<br>`golog.Fatal()`<br>`golog.CheckFatal()`<br>`golog.Stack()` |
 | `LOG_ERROR` | `golog.Error()`<br>`golog.Fatal()`<br>`golog.CheckFatal()`<br>`golog.Stack()` |
-| `LOG_FATAL` | `golog.Fatal()`<sup>**</sup><br>`golog.CheckFatal()`<sup>**</sup> |
+| `LOG_FATAL` | `golog.Fatal()`<sup>\*\*</sup><br>`golog.CheckFatal()`<sup>\*\*</sup> |
 \* Prints to stdout but without any tags in front
 \*\* This will print the error and call `os.Exit(1)`
 
@@ -112,5 +112,5 @@ func main() {
 This will produce:
 
 ```bash
-21.07.2018 at 02:16:41 [DEBUG] main.go:37 | Hello world!
+11.01.2023 at 11:34:22 [DEBUG] main.go:37 | Hello world!
 ```
